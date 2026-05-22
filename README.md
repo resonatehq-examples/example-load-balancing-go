@@ -20,7 +20,7 @@ These are distributed systems concerns that developers are typically forced to w
 
 ## The solution
 
-Resonate has built-in service discovery, load balancing, and recovery. Workers declare a group; the client targets `poll://any@<group>`. The server handles the rest.
+Resonate has built-in service discovery, load balancing, and recovery. Workers declare a group; the client targets `poll://any@<group>`. The server handles routing.
 
 ```go
 // Worker: join the "workers" group
@@ -51,7 +51,7 @@ In production you would run each worker as a separate OS process or container â€
 
 `localnet.NewLocal` creates a fully self-contained in-process server. Each `resonate.New` call with a distinct `LocalNetwork` has its own isolated server state. The execute-message dispatch and anycast routing both happen within each instance's own actor goroutine â€” there is no shared bus between multiple `LocalNetwork` instances. The real `resonate dev` server provides that shared bus via its SSE long-poll endpoint at `/poll/{group}/{pid}`, which all workers connect to concurrently.
 
-**This is an important limitation to be aware of** when writing tests: unit tests that use localnet are single-worker only. Multi-worker scenarios require a real server or an equivalent shared-state mock.
+Worth noting when writing tests: unit tests that use localnet are single-worker only. Multi-worker scenarios require a real server or an equivalent shared-state mock.
 
 ## Prerequisites
 
