@@ -6,6 +6,12 @@
   </picture>
 </p>
 
+<p align="center">
+  <a href="https://resonatehq.github.io/examples-ci/">
+    <img src="https://img.shields.io/endpoint?url=https://resonatehq.github.io/examples-ci/status/example-load-balancing-go.json" alt="examples-ci status">
+  </a>
+</p>
+
 # Worker load balancing | Resonate Go SDK
 
 Service discovery and automatic load balancing across multiple Resonate workers — in a single Go binary.
