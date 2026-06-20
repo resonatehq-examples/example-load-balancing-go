@@ -66,7 +66,7 @@ Worth noting when writing tests: unit tests that use localnet are single-worker 
   ```
   brew install resonatehq/tap/resonate
   ```
-  Other install paths: <https://docs.resonatehq.io/get-started/install>.
+  Other install paths: <https://docs.resonatehq.io/get-started/quickstart>.
 
 ## Setup
 
@@ -151,8 +151,8 @@ example-load-balancing-go/
 ## Next steps
 
 - [Get started](https://docs.resonatehq.io/get-started) — install paths + first-program walkthrough.
-- [Worker groups and targets](https://docs.resonatehq.io/concepts/targets) — how `poll://any@<group>` routing works.
-- [Durable execution concepts](https://docs.resonatehq.io/concepts) — what makes task dispatch durable and how crashed workers recover.
+- [Worker groups and targets](https://docs.resonatehq.io/learn/targets) — how `poll://any@<group>` routing works.
+- [Durable execution concepts](https://docs.resonatehq.io/learn/durable-execution) — what makes task dispatch durable and how crashed workers recover.
 - [`example-hello-world-go`](https://github.com/resonatehq-examples/example-hello-world-go) — simpler starting point if this is your first Resonate program.
 
 ## Community
