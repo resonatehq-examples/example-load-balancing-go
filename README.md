@@ -28,22 +28,37 @@ These are distributed systems concerns that developers are typically forced to w
 
 Resonate has built-in service discovery, load balancing, and recovery. Workers declare a group; the client targets `poll://any@<group>`. The server handles routing.
 
-```go
-// Worker: join the "workers" group
-r, err := resonate.New(resonate.Config{
-    Network: httpnet.NewHTTP(serverURL, httpnet.HTTPOptions{
-        PID:   "worker-1",  // unique per instance
-        Group: "workers",   // shared group name
-    }),
-})
+In your worker you specify the group it belongs to, with a PID that's unique per instance (`main.go`):
 
-// Client: target any worker in the group
-h, err := client.RPC(ctx, id, "computeSomething", args,
-    resonate.RPCOptions{Target: "poll://any@workers"},
-)
+<!-- sotto self:main.go#worker -->
+
+```go
+workerID := fmt.Sprintf("%d", i+1)
+pid := fmt.Sprintf("worker-%s-%d", workerID, time.Now().UnixNano())
+
+r, err := resonate.New(resonate.Config{
+	Network: httpnet.NewHTTP(*url, httpnet.HTTPOptions{
+		PID:   pid,    // unique per instance
+		Group: *group, // shared group name
+	}),
+})
 ```
 
 Run as many instances as needed. Resonate distributes tasks across all of them.
+
+Then, to call a function on those workers, you target any worker in the group (`main.go`):
+
+<!-- sotto self:main.go#target+client -->
+
+```go
+// Build the anycast target address for the worker group.
+target := fmt.Sprintf("poll://any@%s", *group)
+
+id := fmt.Sprintf("%s-%s", runID, taskName)
+h, err := client.RPC(ctx, id, "computeSomething", WorkArgs{TaskName: taskName},
+	resonate.RPCOptions{Target: target},
+)
+```
 
 ## About this example
 

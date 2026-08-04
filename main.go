@@ -62,15 +62,17 @@ func main() {
 
 	for i := 0; i < *workers; i++ {
 		i := i
+		// #region worker
 		workerID := fmt.Sprintf("%d", i+1)
 		pid := fmt.Sprintf("worker-%s-%d", workerID, time.Now().UnixNano())
 
 		r, err := resonate.New(resonate.Config{
 			Network: httpnet.NewHTTP(*url, httpnet.HTTPOptions{
-				PID:   pid,
-				Group: *group,
+				PID:   pid,    // unique per instance
+				Group: *group, // shared group name
 			}),
 		})
+		// #endregion
 		if err != nil {
 			log.Fatalf("resonate.New (worker-%s): %v", workerID, err)
 		}
@@ -110,8 +112,10 @@ func main() {
 	}
 	defer func() { _ = client.Stop() }()
 
+	// #region target
 	// Build the anycast target address for the worker group.
 	target := fmt.Sprintf("poll://any@%s", *group)
+	// #endregion
 
 	runID := fmt.Sprintf("lb-demo-%d", time.Now().UnixNano())
 
@@ -127,10 +131,12 @@ func main() {
 		taskName := fmt.Sprintf("task-%d", i)
 		fmt.Printf("[client] dispatching %s\n", taskName)
 
+		// #region client
 		id := fmt.Sprintf("%s-%s", runID, taskName)
 		h, err := client.RPC(ctx, id, "computeSomething", WorkArgs{TaskName: taskName},
 			resonate.RPCOptions{Target: target},
 		)
+		// #endregion
 		if err != nil {
 			log.Printf("[client] RPC error for %s: %v", taskName, err)
 			results <- dispatchResult{taskName: taskName, err: err}
