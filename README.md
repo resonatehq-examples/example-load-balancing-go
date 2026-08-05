@@ -158,7 +158,6 @@ example-load-balancing-go/
 ├── main.go        worker instances + client dispatch
 ├── go.mod         module declaration + SDK pin
 ├── go.sum         checksums
-├── assets/        README banner images
 ├── LICENSE        Apache-2.0
 └── README.md
 ```
@@ -174,8 +173,8 @@ example-load-balancing-go/
 
 - Discord: <https://resonatehq.io/discord>
 - X: <https://x.com/resonatehqio>
-- LinkedIn: <https://linkedin.com/company/resonatehq>
-- YouTube: <https://youtube.com/@resonatehq>
+- LinkedIn: <https://www.linkedin.com/company/resonatehqio>
+- YouTube: <https://www.youtube.com/@resonatehqio>
 - Journal: <https://journal.resonatehq.io>
 
 ## License
