@@ -1,0 +1,5 @@
+# Go build artifacts — the compiled binary is named after the directory
+example-load-balancing-go
+
+# OS cruft
+.DS_Store
